@@ -1,0 +1,243 @@
+﻿<!-- sec_level_fixed.html -->
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <!-- Force UTF-8 as first header the browser sees -->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta charset="utf-8" />
+  <title>סיווג אבטחת מידע</title>
+  <style>
+    :root {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      --primary: #005eb8;
+      --secondary: #f2f2f2;
+    }
+
+    body {
+      margin: 0;
+      background: var(--secondary);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+    }
+
+    #card {
+      background: #fff;
+      border-radius: 1.5rem;
+      padding: 2rem 3rem;
+      width: min(90vw, 550px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      animation: fadeIn 0.4s ease;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 0;
+      color: var(--primary);
+      font-size: 1.6rem;
+    }
+
+    .q-text {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    button {
+      flex: 1;
+      padding: 0.8rem 0;
+      font-size: 1rem;
+      border: none;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .yes {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .no {
+      background: #c4c4c4;
+      color: #000;
+    }
+
+    #result {
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      padding: 1.4rem;
+      border-radius: 1rem;
+      margin-top: 1rem;
+    }
+
+    .basic {
+      background: #28a745;
+    }
+
+    .medium {
+      background: #ffa500;
+    }
+
+    .high {
+      background: #dc3545;
+    }
+
+    .single {
+      background: #6f42c1;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div id="card">
+    <h1>מחשבון סיווג מאגר מידע</h1>
+    <div id="question"></div>
+    <div id="buttons" class="btn-group"></div>
+    <div id="result" class="hidden"></div>
+  </div>
+
+  <script>
+    // State
+    const state = { current: null, answers: {} };
+
+    // Questions and logic
+    const questions = {
+      q1: {
+        text: "האם אתה מנהל/ת את המאגר בעצמך, ומרשה גישה רק לעצמך ולמקסימום שני אנשים נוספים?",
+        next: ans => (ans === "yes" ? "q2" : "q5")
+      },
+      q2: {
+        text: "האם קיים על המאגר חובת סודיות מקצועית (למשל: עורך דין, פסיכיאטר)?",
+        next: "q3"
+      },
+      q3: {
+        text: "האם מטרת המאגר העיקרית היא איסוף מידע לצורך מסירתו לאחרים (כגון דיוור ישיר)?",
+        next: "q4"
+      },
+      q4: {
+        text: "האם המאגר כולל מידע על 10,000 אנשים או יותר?",
+        next: (ans, st) => {
+          if (st.answers.q2 === "no" && st.answers.q3 === "no" && ans === "no") {
+            finish("single");
+            return null;
+          }
+          return "q5";
+        }
+      },
+      q5: {
+        text: "האם בעלות המאגר היא של גוף ציבורי (משרד ממשלה, רשות מקומית וכו׳)?",
+        next: "q6"
+      },
+      q6: {
+        text: "האם המאגר כולל לפחות אחד מסוגי המידע הבאים: צנעת חייו של אדם, מידע רפואי/נפשי, מידע גנטי, דעות פוליטיות, עבר פלילי, נתוני תקשורת, מידע ביומטרי, מידע על נכסים/חובות כלכליות, הרגלי צריכה?",
+        next: (ans, st) => {
+          if (st.answers.q5 === "no" && ans === "no") {
+            finish("basic");
+            return null;
+          }
+          return "q7";
+        }
+      },
+      q7: {
+        text: "האם המאגר משמש בלבד לניהול מידע על עובדים או ספקים שלך, ואינו משמש כלל לתיעוד/ניהול של פרטים חיצוניים?",
+        next: "q8"
+      },
+      q8: {
+        text: "האם רשומים במאגר רק סוגי המידע המוגבלים הבאים (ולא כולל: צנעת חיים, מידע גנטי, דעות פוליטיות, מידע ביומטרי מלבד תמונות פנים, הרגלי צריכה)?",
+        next: "q9"
+      },
+      q9: {
+        text: "האם מספר האנשים עם הרשאות גישה אינו עולה על 10?",
+        next: (ans, st) => {
+          if (st.answers.q7 === "yes" && st.answers.q8 === "yes" && ans === "yes") {
+            finish("basic");
+            return null;
+          }
+          return "q10";
+        }
+      },
+      q10: {
+        text: "האם המאגר מכיל מידע על 100,000 אנשים או יותר?",
+        next: "q11"
+      },
+      q11: {
+        text: "האם למעלה מ־100 אנשים מחזיקים בהרשאות גישה?",
+        next: (ans, st) => {
+          if (st.answers.q10 === "yes" || ans === "yes") {
+            finish("high");
+          } else {
+            finish("medium");
+          }
+          return null;
+        }
+      }
+    };
+
+    // Show question
+    function showQuestion(id) {
+      const q = questions[id];
+      if (!q) return;
+      state.current = id;
+      document.getElementById("question").innerHTML = `<p class="q-text">${q.text}</p>`;
+      const btns = document.getElementById("buttons");
+      btns.innerHTML = "";
+      ["yes","no"].forEach(val => {
+        const b = document.createElement("button");
+        b.textContent = val === "yes" ? "כן" : "לא";
+        b.className = val;
+        b.onclick = () => {
+          state.answers[id] = val;
+          const nextId = typeof q.next === "function" ? q.next(val, state) : q.next;
+          if (nextId) showQuestion(nextId);
+        };
+        btns.appendChild(b);
+      });
+    }
+
+    // Show result
+    function finish(levelKey) {
+      const resEl = document.getElementById("result");
+      const texts = {
+        single: "סיווג: מאגר מנוהל בידי יחיד",
+        basic: "סיווג: בסיסי",
+        medium: "סיווג: בינוני",
+        high: "סיווג: גבוהה"
+      };
+      resEl.className = levelKey;
+      resEl.textContent = texts[levelKey];
+      document.getElementById("question").innerHTML = "";
+      document.getElementById("buttons").innerHTML = "";
+      const restart = document.createElement("button");
+      restart.textContent = "התחל מחדש";
+      restart.style.marginTop = "1rem";
+      restart.onclick = () => {
+        state.current = null;
+        state.answers = {};
+        resEl.className = "hidden";
+        resEl.textContent = "";
+        showQuestion("q1");
+      };
+      document.getElementById("buttons").appendChild(restart);
+    }
+
+    // Kick things off
+    showQuestion("q1");
+  </script>
+</body>
+</html>

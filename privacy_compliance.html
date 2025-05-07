@@ -1,0 +1,318 @@
+﻿<!-- privacy_compliance_fixed.html -->
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <!-- Force UTF-8 as first header the browser sees -->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>שאלון ציות לפרטיות</title>
+  <!-- Heebo Hebrew font -->
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-light: #6366f1;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --radius: 1.2rem;
+      --transition: .25s ease;
+      font-family: 'Heebo', system-ui, sans-serif;
+    }
+
+    *,*::before,*::after{box-sizing:border-box}
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(120deg,#e0e7ff 0%,#f8fafc 40%);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 2rem;
+    }
+    #app {
+      width: 100%;
+      max-width: 800px;
+    }
+
+    h1 {
+      margin: 0 0 1rem;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    h2 {
+      margin: 0 0 1rem;
+      font-size: 1.35rem;
+    }
+
+    .progress-wrapper {
+      background: #e5e7eb;
+      border-radius: 9999px;
+      height: 10px;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: var(--primary-light);
+      width: 0;
+      transition: width var(--transition);
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 16px rgba(0,0,0,.05);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      animation: fadeIn .4s ease;
+    }
+
+    fieldset {
+      border: 0;
+      padding: 0;
+      margin: 0 0 1rem;
+    }
+    legend {
+      font-weight: 600;
+      margin-bottom: .5rem;
+    }
+
+    .answers {
+      display: flex;
+      gap: 2rem;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      cursor: pointer;
+      user-select: none;
+      font-weight: 500;
+    }
+    input[type="radio"] {
+      accent-color: var(--primary);
+    }
+
+    button {
+      background: var(--primary);
+      border: none;
+      color: #fff;
+      padding: .7rem 1.6rem;
+      border-radius: .7rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+    }
+    button:hover:not([disabled]) {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+    }
+    button[disabled] {
+      background: #cbd5e1;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .result {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 2px solid #34d399;
+    }
+    ul {
+      margin: 0 0 1.5rem;
+      padding-inline-start: 1.2rem;
+      line-height: 1.6;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <main id="app"></main>
+
+  <script>
+    /* ===================== DATA ===================== */
+    const parts = [
+      {
+        title: 'חלק 1 – חובת מינוי ממונה הגנת פרטיות (DPO)',
+        questions: [
+          'האם אתם גוף ציבורי / בנק / מבטח / בית-חולים / קופת-חולים / ספק רט״מ / ספק חיפוש?',
+          'האם המטרה העיקרית של העסק היא איסוף מידע אישי לשם העברתו לגורם שלישי (כולל דיוור ישיר) ויש לכם במאגר ≥ 10,000 אנשים?',
+          'האם העיסוק העיקרי שלכם כרוך בניטור שיטתי, שוטף ובהיקף ניכר של התנהגות/מיקום/פעולות?'
+        ]
+      },
+      {
+        title: 'חלק 2 – חובת רישום במרשם מאגרי מידע',
+        questions: [
+          'האם מטרת המאגר העיקרית היא איסוף מידע אישי למסירה לאחר כדרך עיסוק (כולל דיוור) ויש בו > 10,000 איש?',
+          'האם אתם “גוף ציבורי” כבעל השליטה במאגר (למעט מאגר הכולל רק מידע על עובדי אותו גוף)?'
+        ]
+      },
+      {
+        title: 'חלק 3 – חובת הודעה לרשות על מאגר רגיש “גדול במיוחד”',
+        questions: [
+          'האם במאגר יש לפחות סוג אחד של מידע רגיש (בריאות, גנטי, ביומטרי, דעות פוליטיות/דתיות, נטייה מינית, עבר פלילי, הערכת אישיות, נתוני מיקום/תעבורה, נתוני שכר/פיננסיים, מידע סודי סטטוטורית)?',
+          'האם היקף המאגר > 100,000 אנשים?',
+          'האם המאגר פטור מחובת הודעה כי הוא “פורסם לרבים” לפי חוק?'
+        ]
+      },
+      {
+        title: 'חלק 4 – מדיניות פרטיות',
+        questions: [
+          'האם יש לכם מדיניות פרטיות כתובה?',
+          'אם יש מדיניות, האם היא כוללת את כל הסעיפים הנדרשים (זהות הגורם, מטרות, זכויות עיון/תיקון, השלכות סירוב)?'
+        ]
+      }
+    ];
+
+    /* ===================== STATE ===================== */
+    const answers = {};
+    let currentPart = 0;
+    const totalParts = parts.length;
+
+    /* ===================== ELEMENTS ===================== */
+    const app = document.getElementById('app');
+
+    /* ===================== RENDERING ===================== */
+    function renderPart(index) {
+      const part = parts[index];
+      app.innerHTML = '';
+
+      // Title & progress
+      const title = document.createElement('h1');
+      title.textContent = 'שאלון ציות לפרטיות';
+      app.appendChild(title);
+
+      const progressWrapper = document.createElement('div');
+      progressWrapper.className = 'progress-wrapper';
+      const progressBar = document.createElement('div');
+      progressBar.className = 'progress-bar';
+      progressBar.style.width = `${index / totalParts * 100}%`;
+      progressWrapper.appendChild(progressBar);
+      app.appendChild(progressWrapper);
+
+      const card = document.createElement('section');
+      card.className = 'card';
+      app.appendChild(card);
+
+      const h2 = document.createElement('h2');
+      h2.textContent = part.title;
+      card.appendChild(h2);
+
+      part.questions.forEach((q, qi) => {
+        const qId = `p${index}q${qi}`;
+        const fieldset = document.createElement('fieldset');
+        const legend = document.createElement('legend');
+        legend.textContent = `${index + 1}.${qi + 1} ${q}`;
+        fieldset.appendChild(legend);
+
+        const answersDiv = document.createElement('div');
+        answersDiv.className = 'answers';
+        ['כן', 'לא'].forEach(val => {
+          const label = document.createElement('label');
+          const input = document.createElement('input');
+          input.type = 'radio';
+          input.name = qId;
+          input.value = val === 'כן';
+          input.required = true;
+          input.addEventListener('change', () => {
+            answers[qId] = input.value === 'true';
+            checkAllAnswered();
+          });
+          label.appendChild(input);
+          label.appendChild(document.createTextNode(val));
+          answersDiv.appendChild(label);
+        });
+        fieldset.appendChild(answersDiv);
+        card.appendChild(fieldset);
+      });
+
+      const btn = document.createElement('button');
+      btn.textContent = index === totalParts - 1 ? 'הצג תוצאות' : 'המשך';
+      btn.disabled = true;
+      btn.addEventListener('click', () => {
+        if (index === totalParts - 1) {
+          showResults();
+        } else {
+          currentPart++;
+          renderPart(currentPart);
+        }
+      });
+      card.appendChild(btn);
+
+      function checkAllAnswered() {
+        const count = Object.keys(answers).filter(k => k.startsWith(`p${index}`)).length;
+        btn.disabled = count < part.questions.length;
+      }
+    }
+
+    function showResults() {
+      app.innerHTML = '';
+
+      const title = document.createElement('h1');
+      title.textContent = 'תוצאות';
+      app.appendChild(title);
+
+      const card = document.createElement('section');
+      card.className = 'card result';
+      app.appendChild(card);
+
+      const h2 = document.createElement('h2');
+      h2.textContent = 'סיכום ופעולות נדרשות';
+      card.appendChild(h2);
+
+      const ul = document.createElement('ul');
+      card.appendChild(ul);
+
+      // Business logic
+      const part1Yes = ['p0q0', 'p0q1', 'p0q2'].some(id => answers[id]);
+      const part2Yes = ['p1q0', 'p1q1'].some(id => answers[id]);
+      const part3Condition = answers['p2q0'] && answers['p2q1'] && !answers['p2q2'];
+      const hasPolicy = answers['p3q0'];
+      const policyComplete = answers['p3q1'];
+
+      if (part1Yes) li('חובה למנות ממונה הגנת פרטיות (DPO).');
+      else li('לא נדרש למנות DPO.');
+      if (part2Yes) li('הגישו בקשה לרישום המאגר במרשם מאגרי מידע.');
+      else li('אין חובה לרישום במרשם מאגרי מידע.');
+      if (part3Condition) li('הגישו תוך 30 ימים טופס "חובת הודעה" לרשות על מאגר רגיש גדול במיוחד.');
+      else li('אין חובת הודעה על מאגר רגיש.');
+
+      if (!hasPolicy) {
+        li('נסחו מייד מדיניות פרטיות הכוללת: זהות הגורם, מטרות העיבוד, זכויות עיון/תיקון והשלכות סירוב.');
+      } else if (!policyComplete) {
+        li('עדכנו את מדיניות הפרטיות להכללת כל הסעיפים הנדרשים.');
+      } else {
+        li('מדיניות הפרטיות עומדת בדרישות.');
+      }
+
+      li('תעדו את כל הפעולות בתיק אבטחת המידע וחזרו על השאלון אחת לשנה או בכל שינוי מהותי.');
+
+      function li(text) {
+        const li = document.createElement('li');
+        li.textContent = text;
+        ul.appendChild(li);
+      }
+
+      // Restart button
+      const restart = document.createElement('button');
+      restart.textContent = 'התחל מחדש';
+      restart.addEventListener('click', () => {
+        currentPart = 0;
+        Object.keys(answers).forEach(k => delete answers[k]);
+        renderPart(0);
+      });
+      card.appendChild(restart);
+    }
+
+    // Init
+    renderPart(currentPart);
+  </script>
+</body>
+</html>
