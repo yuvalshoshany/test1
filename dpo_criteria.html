@@ -13,9 +13,7 @@
       --brand: #0d6efd;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -28,297 +26,349 @@
 
     .container {
       width: 100%;
-      max-width: 900px;
-      background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      max-width: 920px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.08);
       padding: 2rem 2.5rem;
       display: flex;
       flex-direction: column;
       gap: 2rem;
     }
 
-    h1 {
-      margin: 0 0 0.5rem;
-      font-size: 1.8rem;
-      color: var(--brand);
-      text-align: center;
-    }
+    h1 { margin: 0 0 .5rem; font-size: 1.9rem; text-align: center; color: var(--brand); }
+    h2 { margin: 0 0 1rem; font-size: 1.3rem; }
 
-    .slide {
-      display: none;
-    }
+    .slide { display: none; }
+    .slide.active { display: block; }
 
-    .slide.active {
-      display: block;
-    }
+    .question { margin-bottom: 1.5rem; }
+    .question p { margin: 0 0 .5rem; font-weight: 600; }
 
-    .question {
-      margin-bottom: 1.5rem;
-    }
-
-    .question p {
-      margin: 0 0 0.5rem;
-      font-weight: 600;
-    }
-
-    /* radio buttons as tiles */
-    .options {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .options input[type="radio"] {
-      display: none;
-    }
+    .options { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .options input[type=radio] { display: none; }
 
     .options label {
-      flex: 1;
-      padding: 0.8rem 0.5rem;
-      text-align: center;
-      border-radius: 12px;
+      flex: 1 0 140px;
+      padding: .8rem .4rem;
       background: var(--clr-gray);
+      border-radius: 12px;
+      text-align: center;
       cursor: pointer;
-      user-select: none;
+      transition: background .2s;
       font-weight: 500;
-      transition: background 0.2s;
+      user-select: none;
     }
 
-    /* checked styles */
+    /* traffic-light colours */
     input[value="low"]:checked + label { background: var(--clr-green); }
     input[value="medium"]:checked + label { background: var(--clr-yellow); }
-    input[value="high"]:checked + label { background: var(--clr-red); }
-
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 1rem;
-    }
+    input[value="high"], input[value="yes"] { } /* style defined below */
+    input[value="high"]:checked + label,
+    input[value="yes"]:checked + label { background: var(--clr-red); }
+    input[value="no"]:checked + label { background: var(--clr-green); }
 
     button {
-      padding: 0.7rem 1.4rem;
-      border: none;
+      padding: .75rem 1.6rem;
+      border: 0;
       border-radius: 8px;
+      background: var(--brand);
+      color:#fff;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      background: var(--brand);
-      color: #fff;
-      transition: opacity 0.2s;
+      transition: opacity .2s;
     }
+    button:disabled { opacity:.35; cursor:not-allowed; }
 
-    button:disabled {
-      opacity: 0.35;
-      cursor: not-allowed;
-    }
+    .nav { display: flex; justify-content: space-between; margin-top: 1rem; }
 
-    /* results */
-    .result {
-      font-size: 1.2rem;
-      line-height: 1.6;
-    }
-
+    .result { font-size: 1.15rem; line-height: 1.6; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>שאלון לבחינת הצורך במינוי ממונה הגנת פרטיות</h1>
+    <h1>שאלון לבחינת החובה למינוי ממונה הגנת פרטיות</h1>
 
-    <!-- Slide 1: עיסוק כללי -->
+    <!-- Slide 0 – קריטריוני חובה מיידיים -->
     <section class="slide active" data-slide="0">
-      <h2>עיסוק כללי</h2>
+      <h2>שלב 1 – קריטריוני חובה</h2>
+      <div class="question">
+        <p>האם הארגון מחזיק במאגר מידע אישי על יותר מ-10,000 אנשים והעיסוק המרכזי שלו הוא איסוף מידע לשם מסירתו (לרבות שירותי דיוור ישיר)?</p>
+        <div class="options">
+          <input type="radio" id="broker-yes" name="broker" value="yes"/>
+          <label for="broker-yes">כן</label>
+          <input type="radio" id="broker-no" name="broker" value="no"/>
+          <label for="broker-no">לא</label>
+        </div>
+      </div>
+      <div class="question">
+        <p>האם הארגון הוא גוף ציבורי?</p>
+        <div class="options">
+          <input type="radio" id="public-yes" name="public" value="yes"/>
+          <label for="public-yes">כן</label>
+          <input type="radio" id="public-no" name="public" value="no"/>
+          <label for="public-no">לא</label>
+        </div>
+      </div>
+      <div class="nav"><span></span><button id="gatingNext" disabled>המשך</button></div>
+    </section>
+
+    <!-- Slide 1 – עיסוק כללי -->
+    <section class="slide" data-slide="1">
+      <h2>שלב 2 – עיסוק כללי</h2>
       <div class="question" data-category="general">
         <p>האם מטרות העמותה כרוכות באיסוף מידע?</p>
         <div class="options">
-          <input type="radio" id="q1-low" name="q1" value="low" />
-          <label for="q1-low">במידה מועטה (ירוק)</label>
-
-          <input type="radio" id="q1-medium" name="q1" value="medium" />
-          <label for="q1-medium">במידה בינונית (צהוב)</label>
-
-          <input type="radio" id="q1-high" name="q1" value="high" />
-          <label for="q1-high">במידה גבוהה (אדום)</label>
+          <input type="radio" id="q1-low" name="q1" value="low"/><label for="q1-low">במידה מועטה</label>
+          <input type="radio" id="q1-medium" name="q1" value="medium"/><label for="q1-medium">במידה בינונית</label>
+          <input type="radio" id="q1-high" name="q1" value="high"/><label for="q1-high">במידה גבוהה</label>
         </div>
       </div>
       <div class="question" data-category="general">
         <p>האם אחת ממטרות העמותה היא גיוס משתתפים חדשים? (עיסוק הכרוך בפעילות מידעית)</p>
         <div class="options">
-          <input type="radio" id="q2-low" name="q2" value="low" />
-          <label for="q2-low">במידה מועטה</label>
-
-          <input type="radio" id="q2-medium" name="q2" value="medium" />
-          <label for="q2-medium">במידה בינונית</label>
-
-          <input type="radio" id="q2-high" name="q2" value="high" />
-          <label for="q2-high">במידה גבוהה</label>
+          <input type="radio" id="q2-low" name="q2" value="low"/><label for="q2-low">במידה מועטה</label>
+          <input type="radio" id="q2-medium" name="q2" value="medium"/><label for="q2-medium">במידה בינונית</label>
+          <input type="radio" id="q2-high" name="q2" value="high"/><label for="q2-high">במידה גבוהה</label>
         </div>
       </div>
-      <div class="nav">
-        <span></span>
-        <button id="next0" disabled>המשך</button>
-      </div>
+      <div class="nav"><button class="prev">חזרה</button><button id="next1" disabled>המשך</button></div>
     </section>
 
-    <!-- Slide 2: ניטור -->
-    <section class="slide" data-slide="1">
-      <h2>ניטור שוטף</h2>
+    <!-- Slide 2 – ניטור -->
+    <section class="slide" data-slide="2">
+      <h2>שלב 3 – ניטור שוטף</h2>
       <div class="question" data-category="monitor">
         <p>האם העמותה מבצעת רישום על התנהגותם או פעילותם של המשתתפים?</p>
         <div class="options">
-          <input type="radio" id="q3-low" name="q3" value="low" />
-          <label for="q3-low">במידה מועטה</label>
-
-          <input type="radio" id="q3-medium" name="q3" value="medium" />
-          <label for="q3-medium">במידה בינונית</label>
-
-          <input type="radio" id="q3-high" name="q3" value="high" />
-          <label for="q3-high">במידה גבוהה</label>
+          <input type="radio" id="q3-low" name="q3" value="low"/><label for="q3-low">במידה מועטה</label>
+          <input type="radio" id="q3-medium" name="q3" value="medium"/><label for="q3-medium">במידה בינונית</label>
+          <input type="radio" id="q3-high" name="q3" value="high"/><label for="q3-high">במידה גבוהה</label>
         </div>
       </div>
       <div class="question" data-category="monitor">
-        <p>האם העמותה מבצעת מעקב אחר מיקומם של המשתתפים? (או אוספת נתוני מיקום)</p>
+        <p>האם העמותה מבצעת מעקב אחר מיקומם של המשתתפים (או אוספת נתוני מיקום)?</p>
         <div class="options">
-          <input type="radio" id="q4-low" name="q4" value="low" />
-          <label for="q4-low">במידה מועטה</label>
-
-          <input type="radio" id="q4-medium" name="q4" value="medium" />
-          <label for="q4-medium">במידה בינונית</label>
-
-          <input type="radio" id="q4-high" name="q4" value="high" />
-          <label for="q4-high">במידה גבוהה</label>
+          <input type="radio" id="q4-low" name="q4" value="low"/><label for="q4-low">במידה מועטה</label>
+          <input type="radio" id="q4-medium" name="q4" value="medium"/><label for="q4-medium">במידה בינונית</label>
+          <input type="radio" id="q4-high" name="q4" value="high"/><label for="q4-high">במידה גבוהה</label>
         </div>
       </div>
       <div class="question" data-category="monitor">
         <p>האם העמותה משתמשת במידע על המשתתפים מעבר לביצוע חיתוכים לשם דיוור ישיר?</p>
         <div class="options">
-          <input type="radio" id="q5-low" name="q5" value="low" />
-          <label for="q5-low">במידה מועטה</label>
-
-          <input type="radio" id="q5-medium" name="q5" value="medium" />
-          <label for="q5-medium">במידה בינונית</label>
-
-          <input type="radio" id="q5-high" name="q5" value="high" />
-          <label for="q5-high">במידה גבוהה</label>
+          <input type="radio" id="q5-low" name="q5" value="low"/><label for="q5-low">במידה מועטה</label>
+          <input type="radio" id="q5-medium" name="q5" value="medium"/><label for="q5-medium">במידה בינונית</label>
+          <input type="radio" id="q5-high" name="q5" value="high"/><label for="q5-high">במידה גבוהה</label>
         </div>
       </div>
-      <div class="nav">
-        <button class="prev">חזרה</button>
-        <button id="next1" disabled>המשך</button>
-      </div>
+      <div class="nav"><button class="prev">חזרה</button><button id="next2" disabled>המשך</button></div>
     </section>
 
-    <!-- Slide 3: היקף ניכר -->
-    <section class="slide" data-slide="2">
-      <h2>היקף ניכר</h2>
+    <!-- Slide 3 – היקף ניכר -->
+    <section class="slide" data-slide="3">
+      <h2>שלב 4 – היקף ניכר</h2>
       <div class="question" data-category="scope">
         <p>מהו היקף האינטראקציות של העמותה מול המשתתפים?</p>
         <div class="options">
-          <input type="radio" id="q6-low" name="q6" value="low" />
-          <label for="q6-low">במידה מועטה</label>
-
-          <input type="radio" id="q6-medium" name="q6" value="medium" />
-          <label for="q6-medium">במידה בינונית</label>
-
-          <input type="radio" id="q6-high" name="q6" value="high" />
-          <label for="q6-high">במידה גבוהה</label>
+          <input type="radio" id="q6-low" name="q6" value="low"/><label for="q6-low">במידה מועטה</label>
+          <input type="radio" id="q6-medium" name="q6" value="medium"/><label for="q6-medium">במידה בינונית</label>
+          <input type="radio" id="q6-high" name="q6" value="high"/><label for="q6-high">במידה גבוהה</label>
         </div>
       </div>
       <div class="question" data-category="scope">
-        <p>האם פעולות המעקב או הניטור חלק משמעותי מפעולות העיבוד?</p>
+        <p>האם פעולות המעקב או הניטור הן חלק משמעותי מפעולות העיבוד?</p>
         <div class="options">
-          <input type="radio" id="q7-low" name="q7" value="low" />
-          <label for="q7-low">במידה מועטה</label>
-
-          <input type="radio" id="q7-medium" name="q7" value="medium" />
-          <label for="q7-medium">במידה בינונית</label>
-
-          <input type="radio" id="q7-high" name="q7" value="high" />
-          <label for="q7-high">במידה גבוהה</label>
+          <input type="radio" id="q7-low" name="q7" value="low"/><label for="q7-low">במידה מועטה</label>
+          <input type="radio" id="q7-medium" name="q7" value="medium"/><label for="q7-medium">במידה בינונית</label>
+          <input type="radio" id="q7-high" name="q7" value="high"/><label for="q7-high">במידה גבוהה</label>
         </div>
       </div>
-      <div class="nav">
-        <button class="prev">חזרה</button>
-        <button id="submit" disabled>הצג תוצאות</button>
-      </div>
+      <div class="nav"><button class="prev">חזרה</button><button id="next3" disabled>המשך</button></div>
     </section>
 
-    <!-- Slide 4: תוצאות -->
-    <section class="slide" data-slide="3">
+    <!-- Slide 4 – שיעור המשתתפים -->
+    <section class="slide" data-slide="4">
+      <h2>שלב 5 – שיעור המשתתפים</h2>
+      <div class="question" data-category="participants">
+        <p>האם אחוז המשתתפים בעמותה מתוך סך כל האוכלוסייה גבוה?</p>
+        <div class="options">
+          <input type="radio" id="q8-low" name="q8" value="low"/><label for="q8-low">במידה מועטה</label>
+          <input type="radio" id="q8-medium" name="q8" value="medium"/><label for="q8-medium">במידה בינונית</label>
+          <input type="radio" id="q8-high" name="q8" value="high"/><label for="q8-high">במידה גבוהה</label>
+        </div>
+      </div>
+      <div class="question" data-category="participants">
+        <p>האם אחוז המשתתפים בעמותה מתוך סך פלח האוכלוסייה אליו היא מיועדת גבוה?</p>
+        <div class="options">
+          <input type="radio" id="q9-low" name="q9" value="low"/><label for="q9-low">במידה מועטה</label>
+          <input type="radio" id="q9-medium" name="q9" value="medium"/><label for="q9-medium">במידה בינונית</label>
+          <input type="radio" id="q9-high" name="q9" value="high"/><label for="q9-high">במידה גבוהה</label>
+        </div>
+      </div>
+      <div class="nav"><button class="prev">חזרה</button><button id="next4" disabled>המשך</button></div>
+    </section>
+
+    <!-- Slide 5 – מידע רגיש -->
+    <section class="slide" data-slide="5">
+      <h2>שלב 6 – מידע בעל רגישות מיוחדת</h2>
+      <div class="question" data-category="sensitive">
+        <p>האם העמותה אוספת או מעבדת מידע המוגדר כ״מידע בעל רגישות מיוחדת״ (למשל מידע רפואי, גנטי, ביומטרי, עבר פלילי, דעות פוליטיות וכד׳)?</p>
+        <div class="options">
+          <input type="radio" id="q10-yes" name="q10" value="high"/><label for="q10-yes">כן</label>
+          <input type="radio" id="q10-no" name="q10" value="low"/><label for="q10-no">לא</label>
+        </div>
+      </div>
+      <div class="nav"><button class="prev">חזרה</button><button id="next5" disabled>המשך</button></div>
+    </section>
+
+    <!-- Slide 6 – האם עיבוד בהיקף ניכר -->
+    <section class="slide" data-slide="6">
+      <h2>שלב 7 – היקף עיבוד</h2>
+      <div class="question">
+        <p>האם עיבוד המידע בעמותה הוא "בהיקף ניכר" לדעתך?</p>
+        <div class="options">
+          <input type="radio" id="large-yes" name="large" value="yes"/>
+          <label for="large-yes">כן</label>
+          <input type="radio" id="large-no" name="large" value="no"/>
+          <label for="large-no">לא</label>
+        </div>
+      </div>
+      <div class="nav"><button class="prev">חזרה</button><button id="next6" disabled>המשך</button></div>
+    </section>
+
+    <!-- Slide 7 – פירוט היקף ניכר (מותנה) -->
+    <section class="slide" data-slide="7">
+      <h2>שלב 7א – פירוט היקף ניכר</h2>
+      <div class="question" data-category="extent">
+        <p>האם המידע שנאסף הוא מקיף ומכיל פרטים רבים ומגוונים על משתתפי העמותה?</p>
+        <div class="options">
+          <input type="radio" id="q11-low" name="q11" value="low"/><label for="q11-low">במידה מועטה</label>
+          <input type="radio" id="q11-medium" name="q11" value="medium"/><label for="q11-medium">במידה בינונית</label>
+          <input type="radio" id="q11-high" name="q11" value="high"/><label for="q11-high">במידה גבוהה</label>
+        </div>
+      </div>
+      <div class="question" data-category="extent">
+        <p>האם השירות שהעמותה מעניקה הוא סיוע מתמשך (ולא נקודתי)?</p>
+        <div class="options">
+          <input type="radio" id="q12-low" name="q12" value="low"/><label for="q12-low">במידה מועטה</label>
+          <input type="radio" id="q12-medium" name="q12" value="medium"/><label for="q12-medium">במידה בינונית</label>
+          <input type="radio" id="q12-high" name="q12" value="high"/><label for="q12-high">במידה גבוהה</label>
+        </div>
+      </div>
+      <div class="question" data-category="extent">
+        <p>האם העמותה משתמשת במידע למספר מטרות שונות?</p>
+        <div class="options">
+          <input type="radio" id="q13-low" name="q13" value="low"/><label for="q13-low">במידה מועטה</label>
+          <input type="radio" id="q13-medium" name="q13" value="medium"/><label for="q13-medium">במידה בינונית</label>
+          <input type="radio" id="q13-high" name="q13" value="high"/><label for="q13-high">במידה גבוהה</label>
+        </div>
+      </div>
+      <div class="question" data-category="extent">
+        <p>האם העמותה שומרת את המידע לאורך זמן (לא מוחקת לאחר מתן השירות)?</p>
+        <div class="options">
+          <input type="radio" id="q14-low" name="q14" value="low"/><label for="q14-low">במידה מועטה</label>
+          <input type="radio" id="q14-medium" name="q14" value="medium"/><label for="q14-medium">במידה בינונית</label>
+          <input type="radio" id="q14-high" name="q14" value="high"/><label for="q14-high">במידה גבוהה</label>
+        </div>
+      </div>
+      <div class="question" data-category="extent">
+        <p>האם התדירות בה נעשה שימוש במידע היא גבוהה (יומי / שבועי / חודשי)?</p>
+        <div class="options">
+          <input type="radio" id="q15-low" name="q15" value="low"/><label for="q15-low">במידה מועטה</label>
+          <input type="radio" id="q15-medium" name="q15" value="medium"/><label for="q15-medium">במידה בינונית</label>
+          <input type="radio" id="q15-high" name="q15" value="high"/><label for="q15-high">במידה גבוהה</label>
+        </div>
+      </div>
+      <div class="nav"><button class="prev">חזרה</button><button id="submit" disabled>הצג תוצאות</button></div>
+    </section>
+
+    <!-- Slide 8 – תוצאה -->
+    <section class="slide" data-slide="8">
       <h2>תוצאה</h2>
       <div id="summary" class="result"></div>
-      <div class="nav">
-        <button class="prev">חזרה</button>
-        <button id="restart">שאלון חדש</button>
-      </div>
+      <div class="nav"><button class="prev">חזרה</button><button id="restart">שאלון חדש</button></div>
     </section>
   </div>
 
   <script>
-    (function () {
-      const slides = document.querySelectorAll('.slide');
-      let current = 0;
+    (function(){
+      const slides=[...document.querySelectorAll('.slide')];
+      let current=0;
 
-      const categories = {};
-      // Attach change listener to enable next buttons
-      document.querySelectorAll('.slide').forEach(slide => {
-        slide.addEventListener('change', () => {
-          const requiredAnswered = [...slide.querySelectorAll('.question')].every(q => q.querySelector('input:checked'));
-          const btn = slide.querySelector('button[id^="next"], #submit');
-          if (btn) btn.disabled = !requiredAnswered;
+      // enable next buttons when all answered in slide
+      slides.forEach(slide=>{
+        slide.addEventListener('change',()=>{
+          const btn=slide.querySelector('button:not(.prev)');
+          if(!btn) return;
+          const allAnswered=[...slide.querySelectorAll('.question')].every(q=>q.querySelector('input:checked'));
+          btn.disabled=!allAnswered;
         });
       });
 
-      // Navigation handlers
-      document.querySelectorAll('.nav').forEach(nav => {
-        nav.addEventListener('click', e => {
-          if (e.target.matches('#next0')) showSlide(1);
-          if (e.target.matches('#next1')) showSlide(2);
-          if (e.target.matches('.prev')) showSlide(current - 1);
-          if (e.target.matches('#submit')) computeResults();
-          if (e.target.matches('#restart')) restart();
-        });
+      // navigation handlers (event delegation)
+      document.body.addEventListener('click',e=>{
+        if(e.target.matches('#gatingNext')) handleGating();
+        else if(e.target.matches('#next1')) showSlide(2);
+        else if(e.target.matches('#next2')) showSlide(3);
+        else if(e.target.matches('#next3')) showSlide(4);
+        else if(e.target.matches('#next4')) showSlide(5);
+        else if(e.target.matches('#next5')) showSlide(6);
+        else if(e.target.matches('#next6')) handleLarge();
+        else if(e.target.matches('#submit')) computeResults();
+        else if(e.target.matches('.prev')) showSlide(current-1);
+        else if(e.target.matches('#restart')) restart();
       });
 
-      function showSlide(i) {
-        slides[current].classList.remove('active');
-        current = i;
-        slides[current].classList.add('active');
-      }
+      function showSlide(i){ slides[current].classList.remove('active'); current=i; slides[current].classList.add('active'); }
 
-      function computeResults() {
-        // collect answers
-        const answers = [...document.querySelectorAll('input:checked')].map(inp => ({
-          id: inp.name,
-          val: inp.value,
-          category: inp.closest('.question').dataset.category
-        }));
-        // tally per category
-        const tally = {};
-        answers.forEach(a => {
-          tally[a.category] = tally[a.category] || { green: 0, yr: 0 };
-          if (a.val === 'low') tally[a.category].green += 1;
-          else tally[a.category].yr += 1; // medium or high
-        });
-
-        // decide recommendation
-        let recommend = false;
-        for (const cat of Object.keys(tally)) {
-          if (tally[cat].yr >= tally[cat].green) {
-            recommend = true;
-            break;
-          }
+      function handleGating(){
+        const brokerYes=document.querySelector('input[name="broker"][value="yes"]:checked');
+        const publicYes=document.querySelector('input[name="public"][value="yes"]:checked');
+        if(brokerYes || publicYes){
+          // Mandatory DPO – jump to summary
+          generateSummary(true);
+          showSlide(8);
+        } else {
+          showSlide(1);
         }
-        const summary = document.getElementById('summary');
-        summary.innerHTML = recommend ?
-          "<p>בהתבסס על תשובותיך, אנו <strong>ממליצים למנות ממונה הגנת פרטיות</strong>.</p>" :
-          "<p>מרבית התשובות היו ירוקות. ניתן לעבור לבחינה הבאה.</p>";
-
-        showSlide(3);
       }
 
-      function restart() {
-        document.querySelectorAll('input:checked').forEach(i => (i.checked = false));
-        document.querySelectorAll('button[id^="next"], #submit').forEach(b => (b.disabled = true));
+      function handleLarge(){
+        const largeYes=document.querySelector('input[name="large"][value="yes"]:checked');
+        if(largeYes){ showSlide(7); } else { computeResults(); }
+      }
+
+      function computeResults(){
+        generateSummary(false);
+        showSlide(8);
+      }
+
+      function generateSummary(forced){
+        const summary=document.getElementById('summary');
+        if(forced){
+          summary.innerHTML='<p>בהתבסס על הקריטריונים, <strong>חלה חובה למנות ממונה הגנת פרטיות</strong>.</p>';
+          return;
+        }
+        // Map answers per category
+        const answers=[...document.querySelectorAll('input:checked')].filter(inp=>inp.closest('.question').dataset.category);
+        const tally={};
+        answers.forEach(a=>{
+          const cat=a.closest('.question').dataset.category;
+          tally[cat]=tally[cat]||{green:0,yr:0};
+          if(a.value==='low') tally[cat].green++; else tally[cat].yr++;
+        });
+        let recommend=false;
+        for(const c in tally){ if(tally[c].yr>=tally[c].green) { recommend=true; break; } }
+        summary.innerHTML=recommend?
+          '<p>בהתבסס על תשובותיך, אנו <strong>ממליצים למנות ממונה הגנת פרטיות</strong>.</p>' :
+          '<p>מרבית התשובות היו ירוקות. ניתן להמשיך לבחינה הבאה או להתייעץ במידת הצורך.</p>';
+      }
+
+      function restart(){
+        document.querySelectorAll('input:checked').forEach(i=>i.checked=false);
+        document.querySelectorAll('button:not(.prev)').forEach(b=>b.disabled=true);
         showSlide(0);
       }
     })();
