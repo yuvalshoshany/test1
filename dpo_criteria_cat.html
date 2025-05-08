@@ -15,21 +15,40 @@
 
     * { box-sizing: border-box; }
 
+    /* Siamese cat background */
     body {
       margin: 0;
       font-family: "Segoe UI", Arial, sans-serif;
-      background: #f2f4f7;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       padding: 2rem 1rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url("https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=1920&q=80") center/cover no-repeat;
+      filter: brightness(0.65) blur(2px);
+      z-index: -2;
+    }
+    body::after { /* subtle overlay */
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(1px);
+      z-index: -1;
     }
 
     .container {
       width: 100%;
       max-width: 920px;
-      background: #fff;
+      background: #ffffffee;
       border-radius: 18px;
-      box-shadow: 0 4px 20px rgba(0,0,0,.08);
+      box-shadow: 0 4px 20px rgba(0,0,0,.15);
       padding: 2rem 2.5rem;
       display: flex;
       flex-direction: column;
@@ -60,12 +79,11 @@
       user-select: none;
     }
 
-    /* traffic-light colours */
+    /* colour feedback */
     input[value="low"]:checked + label { background: var(--clr-green); }
     input[value="medium"]:checked + label { background: var(--clr-yellow); }
-    /* Removed empty ruleset as styles are defined below */
-    input[value="high"]:checked + label,
-    input[value="yes"]:checked + label { background: var(--clr-red); }
+    input[value="high"], input[value="yes"] {}
+    input[value="high"]:checked + label, input[value="yes"]:checked + label { background: var(--clr-red); }
     input[value="no"]:checked + label { background: var(--clr-green); }
 
     button {
