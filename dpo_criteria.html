@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>שאלון מינוי ממונה הגנת פרטיות</title>
+  <style>
+    :root {
+      --clr-green: #d4edda;
+      --clr-yellow: #fff3cd;
+      --clr-red: #f8d7da;
+      --clr-gray: #e2e8f0;
+      --brand: #0d6efd;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f2f4f7;
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 2rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    h1 {
+      margin: 0 0 0.5rem;
+      font-size: 1.8rem;
+      color: var(--brand);
+      text-align: center;
+    }
+
+    .slide {
+      display: none;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    .question p {
+      margin: 0 0 0.5rem;
+      font-weight: 600;
+    }
+
+    /* radio buttons as tiles */
+    .options {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .options input[type="radio"] {
+      display: none;
+    }
+
+    .options label {
+      flex: 1;
+      padding: 0.8rem 0.5rem;
+      text-align: center;
+      border-radius: 12px;
+      background: var(--clr-gray);
+      cursor: pointer;
+      user-select: none;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    /* checked styles */
+    input[value="low"]:checked + label { background: var(--clr-green); }
+    input[value="medium"]:checked + label { background: var(--clr-yellow); }
+    input[value="high"]:checked + label { background: var(--clr-red); }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+    }
+
+    button {
+      padding: 0.7rem 1.4rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--brand);
+      color: #fff;
+      transition: opacity 0.2s;
+    }
+
+    button:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    /* results */
+    .result {
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>שאלון לבחינת הצורך במינוי ממונה הגנת פרטיות</h1>
+
+    <!-- Slide 1: עיסוק כללי -->
+    <section class="slide active" data-slide="0">
+      <h2>עיסוק כללי</h2>
+      <div class="question" data-category="general">
+        <p>האם מטרות העמותה כרוכות באיסוף מידע?</p>
+        <div class="options">
+          <input type="radio" id="q1-low" name="q1" value="low" />
+          <label for="q1-low">במידה מועטה (ירוק)</label>
+
+          <input type="radio" id="q1-medium" name="q1" value="medium" />
+          <label for="q1-medium">במידה בינונית (צהוב)</label>
+
+          <input type="radio" id="q1-high" name="q1" value="high" />
+          <label for="q1-high">במידה גבוהה (אדום)</label>
+        </div>
+      </div>
+      <div class="question" data-category="general">
+        <p>האם אחת ממטרות העמותה היא גיוס משתתפים חדשים? (עיסוק הכרוך בפעילות מידעית)</p>
+        <div class="options">
+          <input type="radio" id="q2-low" name="q2" value="low" />
+          <label for="q2-low">במידה מועטה</label>
+
+          <input type="radio" id="q2-medium" name="q2" value="medium" />
+          <label for="q2-medium">במידה בינונית</label>
+
+          <input type="radio" id="q2-high" name="q2" value="high" />
+          <label for="q2-high">במידה גבוהה</label>
+        </div>
+      </div>
+      <div class="nav">
+        <span></span>
+        <button id="next0" disabled>המשך</button>
+      </div>
+    </section>
+
+    <!-- Slide 2: ניטור -->
+    <section class="slide" data-slide="1">
+      <h2>ניטור שוטף</h2>
+      <div class="question" data-category="monitor">
+        <p>האם העמותה מבצעת רישום על התנהגותם או פעילותם של המשתתפים?</p>
+        <div class="options">
+          <input type="radio" id="q3-low" name="q3" value="low" />
+          <label for="q3-low">במידה מועטה</label>
+
+          <input type="radio" id="q3-medium" name="q3" value="medium" />
+          <label for="q3-medium">במידה בינונית</label>
+
+          <input type="radio" id="q3-high" name="q3" value="high" />
+          <label for="q3-high">במידה גבוהה</label>
+        </div>
+      </div>
+      <div class="question" data-category="monitor">
+        <p>האם העמותה מבצעת מעקב אחר מיקומם של המשתתפים? (או אוספת נתוני מיקום)</p>
+        <div class="options">
+          <input type="radio" id="q4-low" name="q4" value="low" />
+          <label for="q4-low">במידה מועטה</label>
+
+          <input type="radio" id="q4-medium" name="q4" value="medium" />
+          <label for="q4-medium">במידה בינונית</label>
+
+          <input type="radio" id="q4-high" name="q4" value="high" />
+          <label for="q4-high">במידה גבוהה</label>
+        </div>
+      </div>
+      <div class="question" data-category="monitor">
+        <p>האם העמותה משתמשת במידע על המשתתפים מעבר לביצוע חיתוכים לשם דיוור ישיר?</p>
+        <div class="options">
+          <input type="radio" id="q5-low" name="q5" value="low" />
+          <label for="q5-low">במידה מועטה</label>
+
+          <input type="radio" id="q5-medium" name="q5" value="medium" />
+          <label for="q5-medium">במידה בינונית</label>
+
+          <input type="radio" id="q5-high" name="q5" value="high" />
+          <label for="q5-high">במידה גבוהה</label>
+        </div>
+      </div>
+      <div class="nav">
+        <button class="prev">חזרה</button>
+        <button id="next1" disabled>המשך</button>
+      </div>
+    </section>
+
+    <!-- Slide 3: היקף ניכר -->
+    <section class="slide" data-slide="2">
+      <h2>היקף ניכר</h2>
+      <div class="question" data-category="scope">
+        <p>מהו היקף האינטראקציות של העמותה מול המשתתפים?</p>
+        <div class="options">
+          <input type="radio" id="q6-low" name="q6" value="low" />
+          <label for="q6-low">במידה מועטה</label>
+
+          <input type="radio" id="q6-medium" name="q6" value="medium" />
+          <label for="q6-medium">במידה בינונית</label>
+
+          <input type="radio" id="q6-high" name="q6" value="high" />
+          <label for="q6-high">במידה גבוהה</label>
+        </div>
+      </div>
+      <div class="question" data-category="scope">
+        <p>האם פעולות המעקב או הניטור חלק משמעותי מפעולות העיבוד?</p>
+        <div class="options">
+          <input type="radio" id="q7-low" name="q7" value="low" />
+          <label for="q7-low">במידה מועטה</label>
+
+          <input type="radio" id="q7-medium" name="q7" value="medium" />
+          <label for="q7-medium">במידה בינונית</label>
+
+          <input type="radio" id="q7-high" name="q7" value="high" />
+          <label for="q7-high">במידה גבוהה</label>
+        </div>
+      </div>
+      <div class="nav">
+        <button class="prev">חזרה</button>
+        <button id="submit" disabled>הצג תוצאות</button>
+      </div>
+    </section>
+
+    <!-- Slide 4: תוצאות -->
+    <section class="slide" data-slide="3">
+      <h2>תוצאה</h2>
+      <div id="summary" class="result"></div>
+      <div class="nav">
+        <button class="prev">חזרה</button>
+        <button id="restart">שאלון חדש</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    (function () {
+      const slides = document.querySelectorAll('.slide');
+      let current = 0;
+
+      const categories = {};
+      // Attach change listener to enable next buttons
+      document.querySelectorAll('.slide').forEach(slide => {
+        slide.addEventListener('change', () => {
+          const requiredAnswered = [...slide.querySelectorAll('.question')].every(q => q.querySelector('input:checked'));
+          const btn = slide.querySelector('button[id^="next"], #submit');
+          if (btn) btn.disabled = !requiredAnswered;
+        });
+      });
+
+      // Navigation handlers
+      document.querySelectorAll('.nav').forEach(nav => {
+        nav.addEventListener('click', e => {
+          if (e.target.matches('#next0')) showSlide(1);
+          if (e.target.matches('#next1')) showSlide(2);
+          if (e.target.matches('.prev')) showSlide(current - 1);
+          if (e.target.matches('#submit')) computeResults();
+          if (e.target.matches('#restart')) restart();
+        });
+      });
+
+      function showSlide(i) {
+        slides[current].classList.remove('active');
+        current = i;
+        slides[current].classList.add('active');
+      }
+
+      function computeResults() {
+        // collect answers
+        const answers = [...document.querySelectorAll('input:checked')].map(inp => ({
+          id: inp.name,
+          val: inp.value,
+          category: inp.closest('.question').dataset.category
+        }));
+        // tally per category
+        const tally = {};
+        answers.forEach(a => {
+          tally[a.category] = tally[a.category] || { green: 0, yr: 0 };
+          if (a.val === 'low') tally[a.category].green += 1;
+          else tally[a.category].yr += 1; // medium or high
+        });
+
+        // decide recommendation
+        let recommend = false;
+        for (const cat of Object.keys(tally)) {
+          if (tally[cat].yr >= tally[cat].green) {
+            recommend = true;
+            break;
+          }
+        }
+        const summary = document.getElementById('summary');
+        summary.innerHTML = recommend ?
+          "<p>בהתבסס על תשובותיך, אנו <strong>ממליצים למנות ממונה הגנת פרטיות</strong>.</p>" :
+          "<p>מרבית התשובות היו ירוקות. ניתן לעבור לבחינה הבאה.</p>";
+
+        showSlide(3);
+      }
+
+      function restart() {
+        document.querySelectorAll('input:checked').forEach(i => (i.checked = false));
+        document.querySelectorAll('button[id^="next"], #submit').forEach(b => (b.disabled = true));
+        showSlide(0);
+      }
+    })();
+  </script>
+</body>
+</html>
