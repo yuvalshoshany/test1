@@ -126,6 +126,7 @@
       padding-inline-start: 1.2rem;
       line-height: 1.6;
     }
+    
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
@@ -134,8 +135,8 @@
   </style>
 </head>
 <body>
-  <main id="app"></main>
-
+  <main id="app">
+  </main>
   <script>
     /* ===================== DATA ===================== */
     const parts = [
@@ -229,8 +230,11 @@
           label.appendChild(document.createTextNode(val));
           answersDiv.appendChild(label);
         });
+        
+        
         fieldset.appendChild(answersDiv);
         card.appendChild(fieldset);
+        
       });
 
       const btn = document.createElement('button');
@@ -245,6 +249,12 @@
         }
       });
       card.appendChild(btn);
+      const disclaimer = document.createElement('p');
+      disclaimer.textContent = 'שימו לב כי המענה אינו מתחשב בנסיבותיכם המדויקות, ולא מהווה חלופה לייעוץ פרטני';
+      disclaimer.style.fontSize = '0.9rem';
+      disclaimer.style.color = '#6b7280';
+      disclaimer.style.marginTop = '0.5rem';
+      card.appendChild(disclaimer);
 
       function checkAllAnswered() {
         const count = Object.keys(answers).filter(k => k.startsWith(`p${index}`)).length;
@@ -276,7 +286,7 @@
       const part3Condition = answers['p2q0'] && answers['p2q1'] && !answers['p2q2'];
       const hasPolicy = answers['p3q0'];
       const policyComplete = answers['p3q1'];
-
+      li('שימו לב כי המענה אינו מתחשב בנסיבותיכם המדויקות, ולא מהווה חלופה לייעוץ פרטני');
       if (part1Yes) li('חובה למנות ממונה הגנת פרטיות (DPO).');
       else li('לא נדרש למנות DPO.');
       if (part2Yes) li('הגישו בקשה לרישום המאגר במרשם מאגרי מידע.');
