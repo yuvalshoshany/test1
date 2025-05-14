@@ -82,6 +82,16 @@
       margin-top: 1rem;
     }
 
+    #result2 {
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      padding: 1.4rem;
+      border-radius: 1rem;
+      margin-top: 1rem;
+    }
+
     .basic {
       background: #28a745;
     }
@@ -110,6 +120,7 @@
     <div id="question"></div>
     <div id="buttons" class="btn-group"></div>
     <div id="result" class="hidden"></div>
+    <div id="result2" class="hidden"></div>
   </div>
 
   <script>
@@ -213,6 +224,7 @@
     // Show result
     function finish(levelKey) {
       const resEl = document.getElementById("result");
+      const resEl2 = document.getElementById("result2");
       const texts = {
         single: "סיווג: מאגר מנוהל בידי יחיד",
         basic: "סיווג: בסיסי",
@@ -221,6 +233,14 @@
       };
       resEl.className = levelKey;
       resEl.textContent = texts[levelKey];
+      resEl2.className = levelKey;
+      if(texts[levelKey]=="סיווג: מאגר מנוהל בידי יחיד"){
+        resEl2.innerHTML = "<p>בהתאם לסיווג המאגר כמוחזק בידי יחיד, קבועות בחוק מספר חובות בנוגע לאופן ניהולו</p><a href='https://www.gov.il/BlobFolder/guide/data_security_guide/he/%D7%94%D7%9E%D7%93%D7%A8%D7%99%D7%9A%20%D7%94%D7%9E%D7%9C%D7%90%20%D7%9C%D7%99%D7%99%D7%A9%D7%95%D7%9D%20%D7%AA%D7%A7%D7%A0%D7%95%D7%AA%20%D7%90%D7%91%D7%98%D7%97%D7%AA%20%D7%9E%D7%99%D7%93%D7%A2%20%E2%80%93PDF%20%D7%9C%D7%94%D7%93%D7%A4%D7%A1%D7%94_1.pdf'><p>מדריך תקנות הגנת הפרטיות (אבטחת מידע) לעצמאים ולעסקים קטנים</p></a>";
+      }
+      else{
+        resEl2.innerHTML = "<p>בהתאם לסיווג המאגר, קבועות בחוק חובות בנוגע לאופן ניהולו</p><a href='https://www.gov.il/BlobFolder/guide/data_security_guide/he/%D7%94%D7%9E%D7%93%D7%A8%D7%99%D7%9A%20%D7%94%D7%9E%D7%9C%D7%90%20%D7%9C%D7%99%D7%99%D7%A9%D7%95%D7%9D%20%D7%AA%D7%A7%D7%A0%D7%95%D7%AA%20%D7%90%D7%91%D7%98%D7%97%D7%AA%20%D7%9E%D7%99%D7%93%D7%A2%20%E2%80%93PDF%20%D7%9C%D7%94%D7%93%D7%A4%D7%A1%D7%94_1.pdf'><p>מדריך ליישום- תקנות אבטחת מידע</p></a>";
+      }
+      
       document.getElementById("question").innerHTML = "";
       document.getElementById("buttons").innerHTML = "";
       const restart = document.createElement("button");
