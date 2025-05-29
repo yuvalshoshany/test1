@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -25,6 +24,119 @@ input[type=radio]{margin-left:4px;cursor:pointer}
 .nav{display:flex;justify-content:space-between;max-width:850px;margin:25px auto}
 button{padding:10px 22px;font-size:16px;border:none;border-radius:8px;cursor:pointer}
 button[disabled]{opacity:.5;cursor:default}
+
+/* Dashboard Styles */
+.confirmation-banner {
+  background: #e8f5e9;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.risk-tier {
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.donut-chart-container {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.sections-list {
+  margin-top: 2rem;
+}
+
+.section-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.status-pill {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.findings-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.findings-table th,
+.findings-table td {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  text-align: right;
+}
+
+.dashboard-footer {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.help-panel {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #fff;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+  padding: 1rem;
+  border-radius: 8px 0 0 8px;
+}
+
+.disclaimer {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #f5f5f5;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Accessibility */
+:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* GOV-IL Colors */
+:root {
+  --gov-blue: #007bff;
+  --gov-light-blue: #e3f2fd;
+  --gov-success: #28a745;
+  --gov-warning: #ffc107;
+  --gov-danger: #dc3545;
+}
 </style>
 </head>
 <body>
@@ -610,6 +722,84 @@ button[disabled]{opacity:.5;cursor:default}
 </div>
 </div><!-- /container -->
 
+<!-- Results Dashboard -->
+<div id="results-dashboard" style="display: none;">
+  <div class="container">
+    <!-- Confirmation Banner -->
+    <div class="confirmation-banner">
+      <div class="banner-content">
+        <i class="fas fa-check-circle"></i>
+        <span class="submission-time"></span>
+        <span class="risk-tier"></span>
+      </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress">
+      <div id="bar" style="width: 100%"></div>
+      <a href="#" class="edit-answers">ערוך תשובות</a>
+    </div>
+
+    <div class="dashboard-grid">
+      <!-- Left Column - Compliance Snapshot -->
+      <div class="compliance-snapshot">
+        <div class="donut-chart-container">
+          <canvas id="complianceChart"></canvas>
+        </div>
+        <div class="sections-list">
+          <!-- Sections will be populated dynamically -->
+        </div>
+      </div>
+
+      <!-- Right Column - Remediation Plan -->
+      <div class="remediation-plan">
+        <table class="findings-table">
+          <thead>
+            <tr>
+              <th>נושא</th>
+              <th>תיאור הפער</th>
+              <th>המלצה לתיקון</th>
+              <th>אחראי</th>
+              <th>מועד יעד</th>
+              <th>סטטוס</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Findings will be populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="dashboard-footer">
+      <button class="download-report">הורד דוח מלא</button>
+      <button class="email-stakeholders">שלח לבעלי עניין</button>
+    </div>
+
+    <!-- Help Panel -->
+    <div class="help-panel">
+      <button class="toggle-help">עזרה והנחיות</button>
+      <div class="help-content">
+        <h3>הנחיות רשמיות</h3>
+        <ul>
+          <li><a href="https://www.gov.il/he/departments/guides/privacy_protection_authority" target="_blank">רשות להגנת הפרטיות</a></li>
+          <li><a href="https://www.gov.il/he/departments/guides/privacy_protection_authority_guidelines" target="_blank">הנחיות מקצועיות</a></li>
+        </ul>
+        <div class="chatbot-entry">
+          <button class="start-chat">התחל שיחה עם נציג</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+      <p>כלי זה נועד למטרות מידע בלבד ואינו מהווה ייעוץ משפטי.</p>
+      <button class="new-assessment">התחל הערכה חדשה</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const slides=[...document.querySelectorAll('.slide')];
 const prevBtn=document.getElementById('prev');
@@ -657,8 +847,9 @@ nextBtn.onclick=()=>{
   collectAnswers(slides[current]);
   applyConditions();
   if(current===slides.length-1){
-    console.log(answers);
-    alert('התשובות נשמרו במסוף (console).');
+    document.querySelector('.container').style.display = 'none';
+    document.getElementById('results-dashboard').style.display = 'block';
+    initializeDashboard();
   }else{
     showSlide(current+1);
   }
@@ -674,6 +865,114 @@ document.querySelectorAll('input[type=radio]').forEach(r=>{
 
 // הפעלת סרגל בפעם הראשונה
 updateBar();
+
+function initializeDashboard() {
+  // Set submission time
+  const now = new Date();
+  document.querySelector('.submission-time').textContent = 
+    `נשלח ב-${now.toLocaleString('he-IL')}`;
+
+  // Calculate risk tier
+  const riskTier = calculateRiskTier();
+  document.querySelector('.risk-tier').textContent = riskTier;
+  document.querySelector('.risk-tier').style.background = 
+    riskTier === 'בסיסי' ? '#28a745' : 
+    riskTier === 'בינוני' ? '#ffc107' : '#dc3545';
+
+  // Initialize compliance chart
+  const ctx = document.getElementById('complianceChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['עומד בדרישות', 'חלקי', 'לא עומד'],
+      datasets: [{
+        data: [70, 20, 10], // Example data
+        backgroundColor: ['#28a745', '#ffc107', '#dc3545']
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+
+  // Populate sections list
+  const sectionsList = document.querySelector('.sections-list');
+  slides.forEach((slide, index) => {
+    const section = document.createElement('div');
+    section.className = 'section-item';
+    section.innerHTML = `
+      <span class="status-pill" style="background: ${getStatusColor(index)}">
+        ${getStatusIcon(index)}
+      </span>
+      <span>${slide.querySelector('h2').textContent}</span>
+    `;
+    sectionsList.appendChild(section);
+  });
+
+  // Initialize findings table
+  populateFindingsTable();
+}
+
+function calculateRiskTier() {
+  // Example logic - replace with actual calculation
+  const criticalCount = Object.values(answers).filter(a => a === 'לא').length;
+  if (criticalCount > 10) return 'גבוה';
+  if (criticalCount > 5) return 'בינוני';
+  return 'בסיסי';
+}
+
+function getStatusColor(index) {
+  // Example logic - replace with actual calculation
+  const statuses = ['#28a745', '#ffc107', '#dc3545'];
+  return statuses[index % 3];
+}
+
+function getStatusIcon(index) {
+  // Example logic - replace with actual calculation
+  const icons = ['✔︎', '⚠︎', '✖︎'];
+  return icons[index % 3];
+}
+
+function populateFindingsTable() {
+  const tbody = document.querySelector('.findings-table tbody');
+  // Example findings - replace with actual data
+  const findings = [
+    {
+      topic: 'אבטחת מידע',
+      gap: 'חסרים אמצעי הצפנה',
+      fix: 'להטמיע הצפנת SSL',
+      owner: 'מנהל מערכות מידע',
+      due: '2024-06-30'
+    }
+  ];
+
+  findings.forEach(finding => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${finding.topic}</td>
+      <td>${finding.gap}</td>
+      <td>${finding.fix}</td>
+      <td>${finding.owner}</td>
+      <td>${finding.due}</td>
+      <td>
+        <button class="mark-resolved">סמן כטופל</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// Add Chart.js
+const chartScript = document.createElement('script');
+chartScript.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+document.head.appendChild(chartScript);
+
+// Add Font Awesome
+const fontAwesome = document.createElement('link');
+fontAwesome.rel = 'stylesheet';
+fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css';
+document.head.appendChild(fontAwesome);
 </script>
 </body>
 </html>
