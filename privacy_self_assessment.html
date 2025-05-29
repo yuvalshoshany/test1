@@ -1,0 +1,680 @@
+
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>שאלון – חוק הגנת הפרטיות</title>
+<style>
+/* סגנון כללי */
+body{font-family:Arial,Helvetica,sans-serif;background:#f6f6f6;margin:0;color:#111;line-height:1.55}
+.container{max-width:850px;margin:auto;padding:20px}
+/* סרגל התקדמות */
+.progress{height:8px;background:#e0e0e0;border-radius:4px;overflow:hidden;margin-bottom:20px}
+#bar{height:100%;width:0;background:#007bff;transition:width .3s}
+/* שקופיות */
+.slide{display:none;background:#fff;border-radius:12px;padding:30px;box-shadow:0 4px 10px rgba(0,0,0,.1);animation:fade .4s}
+.slide.active{display:block}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+h2{margin-top:0;line-height:1.3}
+/* שאלות */
+.question{margin:14px 0}
+.question-text{font-weight:bold;display:block;margin-bottom:6px}
+.sub{margin-right:22px}
+input[type=radio]{margin-left:4px;cursor:pointer}
+/* ניווט */
+.nav{display:flex;justify-content:space-between;max-width:850px;margin:25px auto}
+button{padding:10px 22px;font-size:16px;border:none;border-radius:8px;cursor:pointer}
+button[disabled]{opacity:.5;cursor:default}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="progress"><div id="bar"></div></div>
+
+<div id="slides">
+
+<!-- סעיף 1 -->
+<div class="slide active" data-slide="1">
+<h2>שאלון לבדיקת עמידה בדרישות חוק הגנת הפרטיות ותקנות אבטחת מידע<br>סעיף 1: פרטי לקוחות ומערכות מידע</h2>
+
+<div class="question">
+<span class="question-text">1.	איפה אתם שומרים את פרטי הלקוחות (אנשים פרטיים ולא חברות או ארגונים)? (במחשב, על נייר או בשניהם)</span>
+<label><input type="radio" name="q1" value="במחשב">במחשב</label>
+<label><input type="radio" name="q1" value="על נייר">על נייר</label>
+<label><input type="radio" name="q1" value="בשניהם">בשניהם</label>
+</div>
+
+<div class="question">
+<span class="question-text">2.	האם אתם שומרים פרטים כמו כתובות ומספרי טלפון של הלקוחות?</span>
+<label><input type="radio" name="q2" value="כן">כן</label>
+<label><input type="radio" name="q2" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">3.	האם אתם שומרים מידע אישי על לקוחות פרטיים (כל נתון שניתן לקישור לאדם מזוהה, אפילו בעקיפין כגון שם, מספר זהות, מזהה ביומטרי, נתוני מיקום, מזהה מקוון, או נתון אחד או יותר הנוגע למצבו הפיזי, הבריאותי, הכלכלי, החברתי או התרבותי)?</span>
+<label><input type="radio" name="q3" value="כן">כן</label>
+<label><input type="radio" name="q3" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">4.	האם בארגון שלכם יש מערכת לניהול פרטי הלקוחות (אנשים פרטיים ולא חברות או ארגונים)?</span>
+<label><input type="radio" name="q4" value="כן">כן</label>
+<label><input type="radio" name="q4" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">5.	האם אתם מיידעים את הלקוחות כי המידע אותו הם מוסרים נשמר במערכת ניהול הלקוחות?</span>
+<label><input type="radio" name="q5" value="כן">כן</label>
+<label><input type="radio" name="q5" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">6.	מי יכול לגשת למערכת לניהול הלקוחות הפרטיים? (רק עובדים או גם ספקים חיצוניים)</span>
+<label><input type="radio" name="q6" value="רק עובדים">רק עובדים</label>
+<label><input type="radio" name="q6" value="גם ספקים חיצוניים">גם ספקים חיצוניים</label>
+</div>
+
+<div class="question">
+<span class="question-text">7.	האם מספר הניגשים למערכת הלקוחות הפרטיים עולה על 10?</span>
+<label><input type="radio" name="q7" value="כן">כן</label>
+<label><input type="radio" name="q7" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">8.	האם מספר הניגשים למערכת הלקוחות הפרטיים על 100?</span>
+<label><input type="radio" name="q8" value="כן">כן</label>
+<label><input type="radio" name="q8" value="לא">לא</label>
+</div>
+</div>
+
+<!-- סעיף 2 -->
+<div class="slide" data-slide="2">
+<h2>סעיף 2: הגנה על מידע</h2>
+
+<div class="question">
+<span class="question-text">8.	האם למערכת לניהול הלקוחות שלכם ניתן להיכנס רק עם סיסמה?</span>
+<label><input type="radio" name="q9" value="כן">כן</label>
+<label><input type="radio" name="q9" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">9.	האם הכניסה למערכת ניהול הלקוחות מתבצעת באמצעות סיסמה אחת משותפת ליותר מעובד אחד?</span>
+<label><input type="radio" name="q10" value="כן">כן</label>
+<label><input type="radio" name="q10" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">10.	האם יש לכם אמצעים נוספים להגנה, כמו קוד אבטחה נוסף?</span>
+<label><input type="radio" name="q11" value="כן">כן</label>
+<label><input type="radio" name="q11" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">11.	האם אתם מגבים את המידע על הלקוחות באופן קבוע?</span>
+<label><input type="radio" name="q12" value="כן">כן</label>
+<label><input type="radio" name="q12" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">12.	אם יש תקלה במערכת, האם יש לכם דרך לשחזר את המידע?</span>
+<label><input type="radio" name="q13" value="כן">כן</label>
+<label><input type="radio" name="q13" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">13.	האם יש תוכנה שמגנה על המחשב שלכם מפני וירוסים?</span>
+<label><input type="radio" name="q14" value="כן">כן</label>
+<label><input type="radio" name="q14" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">14.	האם אפשר להיכנס למערכת לניהול הלקוחות גם מחוץ לארגון?</span>
+<label><input type="radio" name="q15" value="כן">כן</label>
+<label><input type="radio" name="q15" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">15.	האם המידע שלכם מוצפן?</span>
+<label><input type="radio" name="q16" value="כן">כן</label>
+<label><input type="radio" name="q16" value="לא">לא</label>
+</div>
+</div>
+
+<!-- סעיף 3 -->
+<div class="slide" data-slide="3">
+<h2>סעיף 3: שימוש במידע</h2>
+
+<div class="question">
+<span class="question-text">15.	האם אתם שולחים ללקוחות הודעות שיווקיות שמותאמות לצרכים או לתחומי העניין שלהם?</span>
+<label><input type="radio" name="q17" value="כן">כן</label>
+<label><input type="radio" name="q17" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q17" data-show="כן">
+<span class="question-text">o	האם אתם משתמשים בגורם חיצוני לחברה לצורכי שיווק?</span>
+<label><input type="radio" name="q18" value="כן">כן</label>
+<label><input type="radio" name="q18" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q18" data-show="כן">
+<span class="question-text">o	האם אתם מעבירים לגורם החיצוני פרטים על הלקוחות מעבר לשם ופרטי קשר?</span>
+<label><input type="radio" name="q19" value="כן">כן</label>
+<label><input type="radio" name="q19" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q17" data-show="כן">
+<span class="question-text">o	האם כללתם בפניה עדכון של הלקוח בדבר האפשרות להיות מוסר מהמאגר השיווקי?</span>
+<label><input type="radio" name="q20" value="כן">כן</label>
+<label><input type="radio" name="q20" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">16.	האם אתם מוחקים מידע על לקוחות פרטיים שסיימו התקשרות עם הארגון?</span>
+<label><input type="radio" name="q21" value="כן">כן</label>
+<label><input type="radio" name="q21" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">17.	האם אתם מעבירים מידע על לקוחות פרטיים לשותפים עסקיים?</span>
+<label><input type="radio" name="q22" value="כן">כן</label>
+<label><input type="radio" name="q22" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q22" data-show="כן">
+<span class="question-text">o	אם כן, האם אתם מעבירים לשותפים עסקיים רק מידע שנדרש לצורך ביצוע שיתוף הפעולה, ואינכם מעבירים מידע או שאינו קשור למטרה?</span>
+<label><input type="radio" name="q23" value="כן">כן</label>
+<label><input type="radio" name="q23" value="לא">לא</label>
+</div>
+</div>
+
+<!-- סעיף 4 -->
+<div class="slide" data-slide="4">
+<h2>סעיף 4: נהלים ותיעוד</h2>
+
+<div class="question">
+<span class="question-text">20.	האם יש לכם מסמך פנימי שמתעד את הכללים על איך לאסוף את המידע על הלקוחות כולל קבלת הסכמתם?</span>
+<label><input type="radio" name="q24" value="כן">כן</label>
+<label><input type="radio" name="q24" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">21.	האם עדכנתם את הכללים האלה במהלך השנה האחרונה?</span>
+<label><input type="radio" name="q25" value="כן">כן</label>
+<label><input type="radio" name="q25" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">22.	האם יש לכם מסמך פנימי הממפה את המערכות בהן מוחזק המידע של הלקוחות?</span>
+<label><input type="radio" name="q26" value="כן">כן</label>
+<label><input type="radio" name="q26" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">23.	האם יש לכם מסמך פנימי שמסביר כיצד מתבצע שימוש או עיבוד של המידע על הלקוחות הפרטיים?</span>
+<label><input type="radio" name="q27" value="כן">כן</label>
+<label><input type="radio" name="q27" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">24.	האם יש לכם רשימה פנימית שמציינת מי יכול לגשת למערכת לניהול הלקוחות הפרטיים או למידע על הלקוחות הפרטיים?</span>
+<label><input type="radio" name="q28" value="כן">כן</label>
+<label><input type="radio" name="q28" value="לא">לא</label>
+</div>
+</div>
+
+<!-- סעיף 5 -->
+<div class="slide" data-slide="5">
+<h2>סעיף 5: מצלמות</h2>
+
+<div class="question">
+<span class="question-text">24.	האם יש לכם מצלמות בארגון?</span>
+<label><input type="radio" name="q29" value="כן">כן</label>
+<label><input type="radio" name="q29" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">25.	האם המצלמות גם מקליטות קול?</span>
+<label><input type="radio" name="q30" value="כן">כן</label>
+<label><input type="radio" name="q30" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">26.	האם יש שלטים שמודיעים על קיומן של מצלמות?</span>
+<label><input type="radio" name="q31" value="כן">כן</label>
+<label><input type="radio" name="q31" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q31" data-show="כן">
+<span class="question-text">o	האם השילוט נמצא במקום שהבאים לארגון רואים אותו?</span>
+<label><input type="radio" name="q32" value="כן">כן</label>
+<label><input type="radio" name="q32" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">27.	האם ערכתם בדיקה פנימית מוקדמת בדבר חיוניות הצורך בהתקנת המצלמות ואופן התקנתן בצורה שתצמצם ככל האפשר את הפגיעה בפרטיות?</span>
+<label><input type="radio" name="q33" value="כן">כן</label>
+<label><input type="radio" name="q33" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">28.	האם אתם שומרים את ההקלטות של המצלמות יותר משבועיים?</span>
+<label><input type="radio" name="q34" value="כן">כן</label>
+<label><input type="radio" name="q34" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">29.	האם קיימים נהלים שמגדירים כמה זמן וכיצד יש לשמור את ההקלטות מהמצלמות?</span>
+<label><input type="radio" name="q35" value="כן">כן</label>
+<label><input type="radio" name="q35" value="לא">לא</label>
+</div>
+</div>
+
+<!-- סעיף 6 -->
+<div class="slide" data-slide="6">
+<h2>סעיף 6: ספקים חיצוניים ועיבוד מידע</h2>
+
+<div class="question">
+<span class="question-text">30.	האם אתם נעזרים בחברה חיצונית כדי לנהל או לשמור את המידע על הלקוחות שלכם?</span>
+<label><input type="radio" name="q36" value="כן">כן</label>
+<label><input type="radio" name="q36" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q36" data-show="כן">
+<span class="question-text">31.	אם כן, האם יש לכם הסכם שמגדיר את תפקיד החברה החיצונית, חובותיה, ודרישות האבטחה שעליה לעמוד בהן?</span>
+<label><input type="radio" name="q37" value="כן">כן</label>
+<label><input type="radio" name="q37" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q36" data-show="כן">
+<span class="question-text">32.	האם בהסכם ההתקשרות מוגדרות הדרכים שבהן החברה החיצונית יכולה לגשת למערכת לניהול הלקוחות?</span>
+<label><input type="radio" name="q38" value="כן">כן</label>
+<label><input type="radio" name="q38" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q36" data-show="כן">
+<span class="question-text">33.	האם אתם דואגים לשאול את החברה החיצונית על אמצעי האבטחה שהיא משתמשת בהם כדי להגן על המידע שלכם?</span>
+<label><input type="radio" name="q39" value="כן">כן</label>
+<label><input type="radio" name="q39" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q36" data-show="כן">
+<span class="question-text">34.	האם המידע על הלקוחות נשמר או מעובד מחוץ למדינה על ידי החברה החיצונית?</span>
+<label><input type="radio" name="q40" value="כן">כן</label>
+<label><input type="radio" name="q40" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q36" data-show="כן">
+<span class="question-text">35.	האם ספקים חיצוניים עומדים בדרישות האבטחה שלכם, כולל ביקורות פנימיות/חיצוניות?</span>
+<label><input type="radio" name="q41" value="כן">כן</label>
+<label><input type="radio" name="q41" value="לא">לא</label>
+</div>
+</div>
+
+<!-- סעיף 7 -->
+<div class="slide" data-slide="7">
+<h2>סעיף 7: זכות עיון, תיקון ושקיפות</h2>
+
+<div class="question">
+<span class="question-text">36.	האם הלקוחות יכולים לראות את המידע שאתם שומרים עליהם אם יבקשו?</span>
+<label><input type="radio" name="q42" value="כן">כן</label>
+<label><input type="radio" name="q42" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">37.	האם יש לכם תהליכי עבודה פנימיים לאופן מתן זכות העיון ללקוחות?</span>
+<label><input type="radio" name="q43" value="כן">כן</label>
+<label><input type="radio" name="q43" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">38.	האם אתם מיידעים את הלקוחות על האפשרות לעיין במידע האישי שלהם?</span>
+<label><input type="radio" name="q44" value="כן">כן</label>
+<label><input type="radio" name="q44" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">39.	האם יש ללקוחות אפשרות לתקן את המידע האישי שלהם במקרה שמצאו טעות?</span>
+<label><input type="radio" name="q45" value="כן">כן</label>
+<label><input type="radio" name="q45" value="לא">לא</label>
+</div>
+</div>
+
+<!-- סעיף 8 -->
+<div class="slide" data-slide="8">
+<h2>סעיף 8: הדרכת עובדים ומודעות</h2>
+
+<div class="question">
+<span class="question-text">40.	האם אתם מעסיקים עובדים להם קיימת גישה למידע על הלקוחות?</span>
+<label><input type="radio" name="q46" value="כן">כן</label>
+<label><input type="radio" name="q46" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q46" data-show="כן">
+<span class="question-text">o	האם יש לכם הליכי מיון עובדים ושיבוץ מסודרים לפי היקף הגישה למידע של לקוחות?</span>
+<label><input type="radio" name="q47" value="כן">כן</label>
+<label><input type="radio" name="q47" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q46" data-show="כן">
+<span class="question-text">o	האם אתם מעבירים לעובדים הדרכות קבועות על איך לשמור על אבטחת המידע והשימוש הנכון במידע אישי על הלקוחות?</span>
+<label><input type="radio" name="q48" value="כן">כן</label>
+<label><input type="radio" name="q48" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q46" data-show="כן">
+<span class="question-text">o	האם ההדרכות כוללות מידע על סיכוני אבטחת מידע וכיצד להימנע מהם?</span>
+<label><input type="radio" name="q49" value="כן">כן</label>
+<label><input type="radio" name="q49" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q46" data-show="כן">
+<span class="question-text">o	האם יש לכם מסמך פנימי שמסביר לעובדים את הכללים לאיסוף, שימוש ושמירה על המידע?</span>
+<label><input type="radio" name="q50" value="כן">כן</label>
+<label><input type="radio" name="q50" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q46" data-show="כן">
+<span class="question-text">o	האם אתם מוודאים שעובדים חדשים מקבלים את ההדרכה המתאימה בעת הצטרפותם לארגון?</span>
+<label><input type="radio" name="q51" value="כן">כן</label>
+<label><input type="radio" name="q51" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q46" data-show="כן">
+<span class="question-text">o	האם אתם בודקים אם העובדים הבינו את ההדרכות ויודעים ליישם את הכללים שנלמדו?</span>
+<label><input type="radio" name="q52" value="כן">כן</label>
+<label><input type="radio" name="q52" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q46" data-show="כן">
+<span class="question-text">o	האם יש לכם תהליך לבדיקת עובדים על מודעותם לאיומים ולמדיניות אבטחת המידע?</span>
+<label><input type="radio" name="q53" value="כן">כן</label>
+<label><input type="radio" name="q53" value="לא">לא</label>
+</div>
+</div>
+
+<!-- סעיף 9 -->
+<div class="slide" data-slide="9">
+<h2>סעיף 9: אבטחת מידע</h2>
+
+<div class="question">
+<span class="question-text">46.	האם יש מישהו שמרכז את הטיפול בסוגיות של אבטחת המידע בארגון (לדוגמא CISO)?</span>
+<label><input type="radio" name="q54" value="כן">כן</label>
+<label><input type="radio" name="q54" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q54" data-show="כן">
+<span class="question-text">47.	אם כן, האם הוא מוודא שהמידע מאובטח באמצעי אבטחה מתאימים לארגון?</span>
+<label><input type="radio" name="q55" value="כן">כן</label>
+<label><input type="radio" name="q55" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">48.	האם יש לכם תהליך ברור שמגדיר איך לטפל במקרים שבהם ייתכן שהייתה פגיעה באבטחת המידע, כמו פריצה למערכת או אובדן או שיבוש המידע?</span>
+<label><input type="radio" name="q56" value="כן">כן</label>
+<label><input type="radio" name="q56" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">49.	האם יש לכם דרך לוודא שכל אמצעי האבטחה מתעדכנים ומתוחזקים באופן שוטף?</span>
+<label><input type="radio" name="q57" value="כן">כן</label>
+<label><input type="radio" name="q57" value="לא">לא</label>
+</div>
+</div>
+
+<!-- סעיף 10 -->
+<div class="slide" data-slide="10">
+<h2>סעיף 10: סיווג רמת האבטחה ובדיקות אבטחה</h2>
+
+<div class="question">
+<span class="question-text">51.	האם בדקתם אילו סוגי מידע אתם שומרים על הלקוחות הפרטיים (למשל, שמות, כתובות, פרטי תשלום, או מידע רפואי)?</span>
+<label><input type="radio" name="q58" value="כן">כן</label>
+<label><input type="radio" name="q58" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">52.	האם מספר האנשים עליהם יש מידע במערכת המאגר הוא מעל 100,000?</span>
+<label><input type="radio" name="q59" value="כן">כן</label>
+<label><input type="radio" name="q59" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">53.	האם ערכתם בדיקה (עצמאית או בעזרת ייעוץ מקצועי) כדי להבין אם המערכת לניהול הלקוחות הפרטיים שלכם דורשת רמת אבטחה בסיסית, בינונית או גבוהה?</span>
+<label><input type="radio" name="q60" value="כן">כן</label>
+<label><input type="radio" name="q60" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">54.	האם הזמנתם חברה מקצועית לביצוע מבדקי חדירות או בדיקות אחרות לאבטחת המידע במערכת שלכם?</span>
+<label><input type="radio" name="q61" value="כן">כן</label>
+<label><input type="radio" name="q61" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q60" data-show="כן">
+<span class="question-text">55.	אם המערכת שלכם כוללת מידע אישי רגיש על הלקוחות, האם דאגתם לאמצעים כמו הצפנה, סיסמאות חזקות, או הגבלת גישה למורשים בלבד?</span>
+<label><input type="radio" name="q62" value="כן">כן</label>
+<label><input type="radio" name="q62" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">56.	האם יש לכם תהליך לביצוע סקרי סיכונים על מנת להעריך את האיומים הפוטנציאליים על המידע האישי הרגיש שאתם אוספים ומעבדים?</span>
+<label><input type="radio" name="q63" value="כן">כן</label>
+<label><input type="radio" name="q63" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">57.	האם אתם מבצעים בדיקות תקופתיות של אמצעי האבטחה בארגון?</span>
+<label><input type="radio" name="q64" value="כן">כן</label>
+<label><input type="radio" name="q64" value="לא">לא</label>
+</div>
+</div>
+
+<!-- סעיף 11 -->
+<div class="slide" data-slide="11">
+<h2>סעיף 11: מתנדבים</h2>
+
+<div class="question">
+<span class="question-text">57.	האם יש לכם מתנדבים בארגון?</span>
+<label><input type="radio" name="q65" value="כן">כן</label>
+<label><input type="radio" name="q65" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q65" data-show="כן">
+<span class="question-text">o	האם המתנדבים הם קבועים או זמניים?</span>
+<label><input type="radio" name="q66" value="קבועים">קבועים</label>
+<label><input type="radio" name="q66" value="זמניים">זמניים</label>
+</div>
+
+<div class="question sub" data-parent="q65" data-show="כן">
+<span class="question-text">o	האם למתנדבים יש גישה למערכת לניהול הלקוחות או לרשימת הלקוחות שלכם?</span>
+<label><input type="radio" name="q67" value="כן">כן</label>
+<label><input type="radio" name="q67" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q67" data-show="כן">
+<span class="question-text">o	האם למתנדבים יש גישה מרחוק למערכת לניהול הלקוחות?</span>
+<label><input type="radio" name="q68" value="כן">כן</label>
+<label><input type="radio" name="q68" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q65" data-show="כן">
+<span class="question-text">o	האם למתנדבים יש שם משתמש וסיסמה אישיים לגישה למערכת לניהול הלקוחות הפרטיים?</span>
+<label><input type="radio" name="q69" value="כן">כן</label>
+<label><input type="radio" name="q69" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q65" data-show="כן">
+<span class="question-text">o	האם המתנדבים מקבלים הדרכה על שמירה על פרטיות המידע ואבטחתו?</span>
+<label><input type="radio" name="q70" value="כן">כן</label>
+<label><input type="radio" name="q70" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q65" data-show="כן">
+<span class="question-text">o	האם יש לכם נוהל אבטחה פנימי  שמחייב את כל בעלי ההרשאות בארגון כולל עובדים ומתנדבים ומגדיר את תחומי האחריות של המתנדבים בנוגע למידע שהם נחשפים אליו?</span>
+<label><input type="radio" name="q71" value="כן">כן</label>
+<label><input type="radio" name="q71" value="לא">לא</label>
+</div>
+</div>
+
+<!-- סעיף 12 -->
+<div class="slide" data-slide="12">
+<h2>סעיף 12: אבטחת מידע פיזית</h2>
+
+<div class="question">
+<span class="question-text">64.	האם קיימים אמצעי אבטחה פיזיים להגנה על מחשבים או שרתים שבהם נשמר המידע של הארגון?</span>
+<label><input type="radio" name="q72" value="כן">כן</label>
+<label><input type="radio" name="q72" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">65.	האם אתם מגבילים גישה פיזית למקומות בהם נמצא ציוד השייך למערכת ניהול הלקוחות הפרטיים?</span>
+<label><input type="radio" name="q73" value="כן">כן</label>
+<label><input type="radio" name="q73" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">66.	האם קיים מסמך פנימי המגדיר כיצד יש לשמור את הציוד המכיל מידע אישי רגיש אודות הלקוחות הפרטיים?</span>
+<label><input type="radio" name="q74" value="כן">כן</label>
+<label><input type="radio" name="q74" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">67.	האם אתם מבצעים בדיקות תקופתיות של אמצעי האבטחה הפיזיים בארגון?</span>
+<label><input type="radio" name="q75" value="כן">כן</label>
+<label><input type="radio" name="q75" value="לא">לא</label>
+</div>
+</div>
+
+<!-- סעיף 13 -->
+<div class="slide" data-slide="13">
+<h2>סעיף 13: ניהול הרשאות וגישה למידע</h2>
+
+<div class="question">
+<span class="question-text">68.	האם יש לכם מסמך פנימי המגדיר מי יכול לגשת למערכת לניהול הלקוחות?</span>
+<label><input type="radio" name="q76" value="כן">כן</label>
+<label><input type="radio" name="q76" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">69.	האם אתם בודקים ומעדכנים רשימת המורשים למערכת ניהול הלקוחות הפרטיים באופן תדיר?</span>
+<label><input type="radio" name="q77" value="כן">כן</label>
+<label><input type="radio" name="q77" value="לא">לא</label>
+</div>
+</div>
+
+<!-- סעיף 14 -->
+<div class="slide" data-slide="14">
+<h2>סעיף 14: מענה על אירועי אבטחה</h2>
+
+<div class="question">
+<span class="question-text">70.	האם יש לכם תהליך ברור ומוכר לאופן הטיפול במקרים של דליפת מידע או פריצה למערכת?</span>
+<label><input type="radio" name="q78" value="כן">כן</label>
+<label><input type="radio" name="q78" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">71.	האם עברת בארגון אירוע של דליפת מידע או פריצה או הגבלת גישה למערכת ניהול הלקוחות?</span>
+<label><input type="radio" name="q79" value="כן">כן</label>
+<label><input type="radio" name="q79" value="לא">לא</label>
+</div>
+
+<div class="question sub" data-parent="q79" data-show="כן">
+<span class="question-text">o	האם בעקבות האירוע ביצעתם פעולות לתיקון או עדכון המערכת למניעת הישנות האירוע?</span>
+<label><input type="radio" name="q80" value="כן">כן</label>
+<label><input type="radio" name="q80" value="לא">לא</label>
+</div>
+</div>
+
+<!-- סעיף 15 -->
+<div class="slide" data-slide="15">
+<h2>סעיף 15: מדיניות מחיקת מידע</h2>
+
+<div class="question">
+<span class="question-text">72.	האם יש לכם מסמך פנימי המגדיר כמה זמן ניתן לשמור מידע אישי רגיש?</span>
+<label><input type="radio" name="q81" value="כן">כן</label>
+<label><input type="radio" name="q81" value="לא">לא</label>
+</div>
+
+<div class="question">
+<span class="question-text">73.	האם אתם מבצעים מחיקה מאובטחת ומנוהלת של מידע אישי רגיש של לקוחות שאינו רלוונטי יותר?</span>
+<label><input type="radio" name="q82" value="כן">כן</label>
+<label><input type="radio" name="q82" value="לא">לא</label>
+</div>
+</div>
+
+</div><!-- /slides -->
+
+<!-- כפתורי ניווט -->
+<div class="nav">
+<button id="prev" disabled>קודם</button>
+<button id="next">הבא</button>
+</div>
+</div><!-- /container -->
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const prevBtn=document.getElementById('prev');
+const nextBtn=document.getElementById('next');
+const bar=document.getElementById('bar');
+let current=0;
+const answers={};
+
+// שומר תשובות מהשקופית
+function collectAnswers(slide){
+  slide.querySelectorAll('input[type=radio]:checked').forEach(r=>{
+    answers[r.name]=r.value;
+  });
+}
+
+// מראה/מסתיר תתי-שאלות
+function applyConditions(){
+  document.querySelectorAll('.sub').forEach(el=>{
+    const parent=el.dataset.parent;
+    const showVal=el.dataset.show;
+    el.style.display=(answers[parent]===showVal)?'block':'none';
+  });
+}
+
+// מעדכן סרגל התקדמות
+function updateBar(){
+  bar.style.width=(current/(slides.length-1))*100+'%';
+}
+
+// מראה שקופית
+function showSlide(idx){
+  slides[current].classList.remove('active');
+  current=idx;
+  slides[current].classList.add('active');
+  prevBtn.disabled=current===0;
+  nextBtn.textContent=current===slides.length-1?'סיום':'הבא';
+  updateBar();
+}
+
+// כפתור קודם
+prevBtn.onclick=()=>showSlide(current-1);
+
+// כפתור הבא/סיום
+nextBtn.onclick=()=>{
+  collectAnswers(slides[current]);
+  applyConditions();
+  if(current===slides.length-1){
+    console.log(answers);
+    alert('התשובות נשמרו במסוף (console).');
+  }else{
+    showSlide(current+1);
+  }
+};
+
+// הפעלת applyConditions בזמן אמת
+document.querySelectorAll('input[type=radio]').forEach(r=>{
+  r.addEventListener('change',e=>{
+    answers[e.target.name]=e.target.value;
+    applyConditions();
+  });
+});
+
+// הפעלת סרגל בפעם הראשונה
+updateBar();
+</script>
+</body>
+</html>
+
