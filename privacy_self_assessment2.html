@@ -3,6 +3,7 @@
 <html lang="he" dir="rtl">
 
 <head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <meta charset="UTF-8">
 
@@ -306,6 +307,28 @@ button[disabled]{opacity:.5;cursor:default}
 
 <label><input type="checkbox" id="disclaimer-agree" required> אני מסכים/ה לתנאים ומבין/ה כי זהו כלי מידע בלבד</label>
 
+</div>
+
+<!-- Quick Navigation Links -->
+<div class="questionnaire-overview">
+<h3>סקירת נושאי השאלון:</h3>
+<ul>
+<li><a href="#" onclick="jumpToSlide(1)">סעיף 1: פרטי לקוחות ומערכות מידע</a></li>
+<li><a href="#" onclick="jumpToSlide(2)">סעיף 2: הגנה על מידע</a></li>
+<li><a href="#" onclick="jumpToSlide(3)">סעיף 3: שימוש במידע</a></li>
+<li><a href="#" onclick="jumpToSlide(4)">סעיף 4: נהלים ותיעוד</a></li>
+<li><a href="#" onclick="jumpToSlide(5)">סעיף 5: מצלמות</a></li>
+<li><a href="#" onclick="jumpToSlide(6)">סעיף 6: ספקים חיצוניים ועיבוד מידע</a></li>
+<li><a href="#" onclick="jumpToSlide(7)">סעיף 7: זכות עיון, תיקון ושקיפות</a></li>
+<li><a href="#" onclick="jumpToSlide(8)">סעיף 8: הדרכת עובדים ומודעות</a></li>
+<li><a href="#" onclick="jumpToSlide(9)">סעיף 9: אבטחת מידע</a></li>
+<li><a href="#" onclick="jumpToSlide(10)">סעיף 10: סיווג רמת האבטחה ובדיקות אבטחה</a></li>
+<li><a href="#" onclick="jumpToSlide(11)">סעיף 11: מתנדבים</a></li>
+<li><a href="#" onclick="jumpToSlide(12)">סעיף 12: אבטחת מידע פיזית</a></li>
+<li><a href="#" onclick="jumpToSlide(13)">סעיף 13: ניהול הרשאות וגישה למידע</a></li>
+<li><a href="#" onclick="jumpToSlide(14)">סעיף 14: מענה על אירועי אבטחה</a></li>
+<li><a href="#" onclick="jumpToSlide(15)">סעיף 15: מדיניות מחיקת מידע</a></li>
+</ul>
 </div>
 
 </div>
@@ -1692,40 +1715,38 @@ function updateBar(){
 
 }
 
-
-
-// Update showSlide function for proper button text
-
-function showSlide(idx) {
-
-  slides[current].classList.remove('active');
-
-  current = idx;
-
-  slides[current].classList.add('active');
-
-  prevBtn.disabled = current === 0;
-
+// Function to jump to specific slide from disclaimer
+function jumpToSlide(slideIndex) {
+  const disclaimerCheckbox = document.getElementById('disclaimer-agree');
   
-
-  // Update button text based on current slide
-
-  if (current === 0) {
-
-    nextBtn.textContent = 'התחל שאלון';
-
-  } else {
-
-    nextBtn.textContent = current === slides.length - 1 ? 'סיום' : 'הבא';
-
+  // Check if disclaimer is agreed to
+  if (!disclaimerCheckbox.checked) {
+    alert('יש לאשר את ההסכמה לתנאים לפני המעבר לשאלון');
+    return false;
   }
-
   
-
-  updateBar();
-
+  // Navigate to the specified slide
+  showSlide(slideIndex);
+  return false; // Prevent default link behavior
 }
 
+// Update showSlide function for proper button text
+// Update the existing showSlide function to handle disclaimer navigation
+function showSlide(idx) {
+  slides[current].classList.remove('active');
+  current = idx;
+  slides[current].classList.add('active');
+  prevBtn.disabled = current === 0;
+  
+  // Update button text based on current slide
+  if (current === 0) {
+    nextBtn.textContent = 'התחל שאלון';
+  } else {
+    nextBtn.textContent = current === slides.length - 1 ? 'סיום' : 'הבא';
+  }
+  
+  updateBar();
+}
 
 
 // כפתור קודם
@@ -1903,17 +1924,28 @@ function initializeDashboard() {
 
 
 function calculateRiskTier() {
-
-  // Example logic - replace with actual calculation
-
-  const criticalCount = Object.values(answers).filter(a => a === 'לא').length;
-
-  if (criticalCount > 10) return 'גבוה';
-
-  if (criticalCount > 5) return 'בינוני';
-
+  const problematicYesQuestions = ['q10', 'q15', 'q22', 'q30', 'q34', 'q40', 'q68', 'q79'];
+  
+  let criticalCount = 0;
+  
+  Object.entries(answers).forEach(([questionName, value]) => {
+    // Count "לא" answers
+    if (value === 'לא') criticalCount++;
+    
+    // Count problematic "כן" answers
+    if (value === 'כן' && problematicYesQuestions.includes(questionName)) {
+      criticalCount++;
+    }
+    
+    // Count other problematic answers
+    if (['גם ספקים חיצוניים', 'זמניים', 'לא יודע'].includes(value)) {
+      criticalCount++;
+    }
+  });
+  
+  if (criticalCount > 15) return 'גבוה';
+  if (criticalCount > 8) return 'בינוני';
   return 'בסיסי';
-
 }
 
 
@@ -2111,74 +2143,111 @@ const GAP_FIXES = {
 
 
 // Build a mapping from question names to their text
-
+// Build a mapping from question names to their text - FIXED VERSION
 const questionMeta = {};
-
 slides.forEach((slide, idx) => {
-
   slide.querySelectorAll('.question').forEach(q => {
-
-    const name = q.querySelector('input').name;
-
-    const text = q.querySelector('.question-text').textContent.trim();
-
-    questionMeta[name] = { section: idx + 1, text };
-
+    const input = q.querySelector('input');
+    const textElement = q.querySelector('.question-text');
+    
+    if (input && textElement) {
+      const name = input.name;
+      const text = textElement.textContent.trim();
+      questionMeta[name] = { section: idx, text };
+    }
   });
-
 });
 
-
-
 function populateFindingsTable() {
-
   const tbody = document.querySelector('.findings-table tbody');
-
   tbody.innerHTML = '';
-
-  Object.entries(answers).forEach(([q, value]) => {
-
-    // Treat 'לא' and problematic values as problematic
-
-    if (value === 'לא' || value === 'גם ספקים חיצוניים') {
-
-      const meta = questionMeta[q];
-
-      if (!meta) return;
-
-      const gap = meta.text;
-
-      // Try to find a fix in GAP_FIXES, fallback to a generic message
-
-      const fix = GAP_FIXES[gap] || 'יש לעמוד בדרישה: ' + gap.replace('?', '') + '.';
-
-      const tr = document.createElement('tr');
-
-      tr.innerHTML = `
-
-        <td>סעיף ${meta.section}</td>
-
-        <td>${gap}</td>
-
-        <td>${fix}</td>
-
-        <td contenteditable="true" aria-label="בעל אחריות"></td>
-
-        <td><input type="date"></td>
-
-        <td><button class="mark-resolved">סמן כטופל</button></td>
-
-      `;
-
-      tbody.appendChild(tr);
-
+  
+  let foundIssues = 0;
+  
+  // Debug: Log all answers to see what we're working with
+  console.log('All answers collected:', answers);
+  console.log('Question meta:', questionMeta);
+  
+  Object.entries(answers).forEach(([questionName, value]) => {
+    const meta = questionMeta[questionName];
+    if (!meta) {
+      console.log(`No meta found for question: ${questionName}`);
+      return;
     }
-
+    
+    let isProblematic = false;
+    let problemDescription = '';
+    
+    // Check for various problematic scenarios
+    if (value === 'לא') {
+      isProblematic = true;
+      problemDescription = 'תשובה שלילית - חוסר עמידה בדרישה';
+    }
+    else if (value === 'גם ספקים חיצוניים') {
+      isProblematic = true;
+      problemDescription = 'גישה לספקים חיצוניים - סיכון אבטחה';
+    }
+    else if (value === 'לא יודע') {
+      isProblematic = true;
+      problemDescription = 'חוסר מודעות - נדרשת בירור';
+    }
+    else if (value === 'זמניים') {
+      isProblematic = true;
+      problemDescription = 'מתנדבים זמניים עם גישה למידע רגיש';
+    }
+    // Problematic "כן" answers for specific questions - INCLUDING Q10!
+    else if (value === 'כן') {
+      const problematicYesQuestions = {
+        'q10': 'סיסמה משותפת - פגיעה חמורה באבטחה',
+        'q15': 'גישה מרחוק ללא הגנה מתאימה',
+        'q22': 'העברת מידע לשותפים עסקיים',
+        'q30': 'הקלטת קול במצלמות - פגיעה בפרטיות',
+        'q34': 'שמירת הקלטות מעבר לתקופה המותרת',
+        'q40': 'עיבוד מידע מחוץ למדינה',
+        'q68': 'גישה מרחוק למתנדבים',
+        'q79': 'אירועי אבטחה שאירעו'
+      };
+      
+      if (problematicYesQuestions[questionName]) {
+        isProblematic = true;
+        problemDescription = problematicYesQuestions[questionName];
+      }
+    }
+    
+    if (isProblematic) {
+      foundIssues++;
+      const gap = meta.text;
+      const fix = GAP_FIXES[gap] || `יש לטפל בנושא: ${problemDescription}`;
+      
+      console.log(`Adding issue: ${questionName} = ${value} (${problemDescription})`);
+      
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>סעיף ${meta.section}</td>
+        <td>${gap}</td>
+        <td>${fix}</td>
+        <td contenteditable="true" aria-label="בעל אחריות">לא הוגדר</td>
+        <td><input type="date"></td>
+        <td><button class="mark-resolved">סמן כטופל</button></td>
+      `;
+      tbody.appendChild(tr);
+    }
   });
-
+  
+  // If no findings, show a message
+  if (foundIssues === 0) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td colspan="6" style="text-align: center; padding: 2rem; color: #28a745;">
+        <strong>מצוין! לא נמצאו פערי ציות משמעותיים</strong><br>
+        <small>המשיכו לעקוב אחר עדכוני החקיקה ובצעו הערכות תקופתיות</small>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  }
+  
+  console.log(`Total issues found: ${foundIssues}`);
 }
-
-
 
 // Add Chart.js
 
